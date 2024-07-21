@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from rest_framework import generics, viewsets
+from rest_framework.permissions import IsAuthenticated
+
 from .models import Room, Message
 from .serializers import RoomSerializer, MessageSerializer
-from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.decorators import login_required
 from .sentiment_analysis import analyze_sentiment
 from . recommendation_service import recommend_courses
 
