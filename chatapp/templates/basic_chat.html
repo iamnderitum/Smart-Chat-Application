@@ -28,27 +28,31 @@
                 });
             }
 
+            document.addEventListener('DOMContentLoaded', async function() {
+                const response = await fetch('/recommend/');
+                const data = await response.json();
+                console.log(data.recommendations);  // Handle the recommendations
+            });
+
             document.getElementById('message-form').addEventListener('submit', async function(event) {
                 event.preventDefault();
                 const messageInput = document.getElementById('message-input');
                 const content = messageInput.value;
 
-                const response = await fetch(apiUrl, {
+                // Send message to server and get sentiment analysis
+                const response = await fetch('/analyze-message/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Basic ' + btoa('username:password'),  // Replace with actual username and password
                         'X-CSRFToken': csrfToken
                     },
-                    body: JSON.stringify({ content: content })
+                    body: JSON.stringify({ message: content })
                 });
+    
+                const sentiment = await response.json();
+                console.log(sentiment);  // Handle the sentiment analysis result
 
-                if (response.ok) {
-                    messageInput.value = '';
-                    loadMessages();
-                } else {
-                    console.error('Failed to send message');
-                }
+                // Rest of your message sending logic
             });
 
             loadMessages();
