@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:alpine
+
+  chatapp:
+    build: 
+      context: .
+
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+    volumes:
+      - .:/chatapp/chatapp
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+
+  channels:
+    build: 
+      context: .
+    command: >
+      sh -c "python manage.py migrate &&
+             dapne -b 0.0.0.0 -p 8001 chatapp.asgi:application"
+
+    volumes:
+      - .:/chatapp/chatapp
+    ports:
+      - "8001:8001"
+    depends_on:
+      - redis
+
+    environment:
+      - REDIS_URL=redis://redis:6379

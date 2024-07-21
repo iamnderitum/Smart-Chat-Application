@@ -1,0 +1,68 @@
+<!-- templates/chat.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Application</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const apiUrl = '{% url "message-list" %}';
+            const csrfToken = '{{ csrf_token }}';
+
+            async function loadMessages() {
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('username:password'),  // Replace with actual username and password
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+                const messages = await response.json();
+
+                const messagesList = document.getElementById('messages');
+                messagesList.innerHTML = '';
+
+                messages.forEach(message => {
+                    const li = document.createElement('li');
+                    li.textContent = message.content;
+                    messagesList.appendChild(li);
+                });
+            }
+
+            document.getElementById('message-form').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const messageInput = document.getElementById('message-input');
+                const content = messageInput.value;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Basic ' + btoa('username:password'),  // Replace with actual username and password
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ content: content })
+                });
+
+                if (response.ok) {
+                    messageInput.value = '';
+                    loadMessages();
+                } else {
+                    console.error('Failed to send message');
+                }
+            });
+
+            loadMessages();
+        });
+    </script>
+</head>
+<body>
+    <h1>Chat Messages</h1>
+    <ul id="messages">
+        <!-- Messages will be loaded here -->
+    </ul>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
