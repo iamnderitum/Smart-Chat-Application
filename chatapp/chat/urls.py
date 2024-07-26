@@ -8,8 +8,8 @@ router.register(r"messages",MessageViewSet)
 
 urlpatterns = [
     path("chat/", chat_view, name="chat"),
-    path("api/analyze-message/", analyze_message, name="analyze_message"),
-    path('recommend/', recommend_view, name='recommend'),
+    #path("api/analyze-message/", analyze_message, name="analyze_message"),
+    #path('recommend/', recommend_view, name='recommend'),
     path("api/", include(router.urls)),
     path('rooms/', RoomListCreate.as_view(), name='room-list-create'),
     path('rooms/<int:pk>/', RoomDetail.as_view(), name='room-detail'),

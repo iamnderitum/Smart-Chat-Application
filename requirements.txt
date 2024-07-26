@@ -3,3 +3,6 @@ djangorestframework
 channels
 channels_redis
 django-redis
+#nltk
+#transformers
+#torch

@@ -1,3 +1,4 @@
+"""
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -25,3 +26,5 @@ def recommend_courses(user_id):
     similarities = cosine_similarity([user_vector], course_profiles["features"].tolist())
     recommendations = course_profiles.iloc[similarities.argsort()[0][-3:]]['course_id'].tolist()
     return recommendations
+
+"""
