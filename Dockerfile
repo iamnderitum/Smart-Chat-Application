@@ -10,6 +10,7 @@ WORKDIR /chatapp
 # Install dependencies
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
+COPY requirements.txt /chatapp/
 
 #COPY requirements.txt /chatapp/chatapp/
 # Install build tools
