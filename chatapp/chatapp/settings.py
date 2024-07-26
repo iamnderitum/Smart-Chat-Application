@@ -118,22 +118,19 @@ CACHES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-a = 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
-minL = 'django.contrib.auth.password_validation.MinimumLengthValidator'
-common = 'django.contrib.auth.password_validation.CommonPasswordValidator'
-numeric = 'django.contrib.auth.password_validation.NumericPasswordValidator'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': a,
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': minL,
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': common,
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': numeric,
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
