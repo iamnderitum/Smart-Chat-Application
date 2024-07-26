@@ -100,10 +100,11 @@ WSGI_APPLICATION = 'chatapp.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_BOST"),
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASS")
+        "HOST": "localhost", # os.environ.get("DB_HOST"),
+        "PORT": "5432", # os.environ.get("DB_PORT"),
+        "NAME": "devdb", # os.environ.get("DB_NAME"),
+        "USER": "devuser", # os.environ.get("DB_USER"),
+        "PASSWORD": "changeme", # os.environ.get("DB_PASS")
     }
 }
 
