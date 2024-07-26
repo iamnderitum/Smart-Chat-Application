@@ -14,30 +14,37 @@ COPY requirements.txt /chatapp/
 
 #COPY requirements.txt /chatapp/chatapp/
 # Install build tools
-RUN apt-get update && apt-get install -y build-essential libpq-dev
+RUN apt-get update && apt-get install -y build-essential libpq-dev python3-venv
 
-RUN pip install  --upgrade pip \
-    && pip install --no-cache-dir -r /tmp/requirements.txt
+#RUN pip install  --upgrade pip \
+    #&& pip install --no-cache-dir -r /tmp/requirements.txt
 # RUN pip install --no-cache-dir -r requirements.txt
 ARG DEV=false
 
-#RUN python -m venv /py &&\
-    #/py/bin/pip install -r /tmp/requirements.txt && \
-    #if ["$DEV" = "true"]; then /py/bin/pip install -r /tmp/requirements.dev.txt; fi && \
-    #rm -rf /tmp && \
-    #adduser\
-        #--disabled-password \
-        #--no-create-home \
-        #django-user &&\
-    #chown -R django-user:django-user /chatapp
+RUN python -m venv /py && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    apt-get install -y postgresql-client && \
+    #apk add --update --no-cache postgresql-client && \
+    #apk add --update --no-cache --virtual .tmp-build-deps \
+        #build-base postgresql-dev musl-dev && \
+    if ["$DEV" = "true"]; \
+        then /py/bin/pip install -r /tmp/requirements.dev.txt;\
+    fi && \
+    rm -rf /tmp && \
+    #apk del .tmp-build-deps && \
+    adduser\
+        --disabled-password \
+        --no-create-home \
+        django-user &&\
+    chown -R django-user:django-user /chatapp
 
-# Add the rest of the application 
+#Add the rest of the application 
 COPY . /chatapp/
-# ENV PATH="/py/bin:$PATH"
+ENV PATH="/py/bin:$PATH"
 
 # Switch to non-root user
-RUN adduser --disabled-password --no-create-home django-user
-RUN chown -R django-user:django-user /chatapp
+#RUN adduser --disabled-password --no-create-home django-user
+#RUN chown -R django-user:django-user /chatapp
 USER django-user
 
 

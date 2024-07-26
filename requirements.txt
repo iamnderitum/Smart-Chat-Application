@@ -3,7 +3,8 @@ djangorestframework
 channels
 channels_redis
 django-redis
-flake8
+psycopg2
+
 #nltk
 #transformers
 #torch
