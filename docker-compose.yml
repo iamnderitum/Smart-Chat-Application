@@ -22,9 +22,13 @@ services:
       - "8000:8000"
     depends_on:
       - redis
-      #- huggingface_model
+      - db
     environment:
       - REDIS_URL=redis://redis:6379
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
 
   channels:
     build: 
@@ -44,15 +48,15 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
 
-  #huggingface_model:
-    #image: huggingface/transformers-pytorch-gpu
-    #ports:
-      #- "8501:8501"
-    #volumes:
-      #- ./huggingface-model:/models
-    #command: >
-      #sh -c "python -m transformers.cli serving \
-      #--model-id 5CD-AI/Vietnamese-Sentiment-visobert \
-      #-- task text-classification \
-      #-- device cuda"
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
 
+
+volumes:
+  dev-db-data:
