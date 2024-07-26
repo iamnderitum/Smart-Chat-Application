@@ -22,9 +22,15 @@ course_profiles = pd.DataFrame({
 })
 
 def recommend_courses(user_id):
-    user_vector = user_profiles[user_profiles["user_id"]  == user_id]["preferences"].value[0]
-    similarities = cosine_similarity([user_vector], course_profiles["features"].tolist())
-    recommendations = course_profiles.iloc[similarities.argsort()[0][-3:]]['course_id'].tolist()
+    user_vector = user_profiles[user_profiles
+                                ["user_id"]  == user_id]["preferences"]
+                                .value[0]
+    similarities = cosine_similarity([user_vector],\
+                                     course_profiles["features"]
+                                     .tolist())
+    recommendations = course_profiles.iloc[
+                                        similarities.argsort()[0][-3:]]
+                                        ['course_id'].tolist()
     return recommendations
 
 """

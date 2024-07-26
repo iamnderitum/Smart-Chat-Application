@@ -5,7 +5,6 @@ from channels.generics.websocket import AsyncWebsocketConsumer
 from .models import Room, Message
 
 
-
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room"]

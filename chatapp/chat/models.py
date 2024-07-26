@@ -9,9 +9,16 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
+
 class Message(models.Model):
-    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
+    room = models.ForeignKey(Room,
+                             related_name='messages',
+                             on_delete=models.CASCADE
+                             )
+    user = models.ForeignKey(User,
+                             related_name='messages',
+                             on_delete=models.CASCADE
+                             )
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 

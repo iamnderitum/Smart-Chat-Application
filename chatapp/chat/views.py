@@ -8,17 +8,16 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
-from rest_framework import generics, viewsets, permissions
+from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Room, Message
 from .serializers import RoomSerializer, MessageSerializer
-#from .sentiment_analysis import analyze_sentiment
-#from . recommendation_service import recommend_courses
+# from .sentiment_analysis import analyze_sentiment
+# from . recommendation_service import recommend_courses
 
 
-import json
-#@login_required
+@login_required
 def chat_view(request):
     return render(request, "chat.html")
 
@@ -29,8 +28,9 @@ class MessageListView(View):
         serializer = MessageSerializer(messages, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-@method_decorator(csrf_exempt, name="dispatch")    
-class MessageCreateView(View):
+
+@method_decorator(csrf_exempt, name="dispatch")
+class MsgCreateView(View):
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
@@ -41,18 +41,23 @@ class MessageCreateView(View):
             return JsonResponse(serializer.errors, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+
 class MessageViewSet(viewsets.ModelViewSet):
-    queryset=Message.objects.all()
+    queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
 
 class RoomListCreate(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
+
 class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+
 
 class MessageListCreate(generics.ListCreateAPIView):
     queryset = Message.objects.all()
@@ -64,6 +69,7 @@ class MessageListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         room = Room.objects.get(pk=self.kwargs['room_pk'])
         serializer.save(room=room)
+
 
 """
 @csrf_exempt
