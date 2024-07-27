@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from base.models import BaseModel
 
-
-class Room(models.Model):
+class Room(BaseModel):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
 
@@ -10,7 +10,7 @@ class Room(models.Model):
         return self.name
 
 
-class Message(models.Model):
+class Message(BaseModel):
     room = models.ForeignKey(Room,
                              related_name='messages',
                              on_delete=models.CASCADE
