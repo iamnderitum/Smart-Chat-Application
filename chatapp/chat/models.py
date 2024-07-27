@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 from base.models import BaseModel
 from authentication.models import User
+
 
 class Room(BaseModel):
     name = models.CharField(max_length=255)

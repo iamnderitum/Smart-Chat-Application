@@ -5,6 +5,8 @@ from .models import Room, Message
 
 
 User = get_user_model()
+
+
 class MessageModelTest(TestCase):
 
     def setUp(self):

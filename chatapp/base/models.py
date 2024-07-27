@@ -6,6 +6,5 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     is_archived = models.BooleanField(default=False, null=True, blank=True)
 
-
     class Meta:
         abstract = True
