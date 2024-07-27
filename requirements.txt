@@ -5,6 +5,7 @@ channels_redis
 django-redis
 psycopg2
 flake8
+pytest
 #nltk
 #transformers
 #torch

@@ -44,9 +44,10 @@ INSTALLED_APPS = [
     "base",
     "authentication",
     "userprofile",
-    "chat"
+    "chat",
 ]
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 ASGI_APPLICATION = "chatapp.asgi.application"
 
 CHANNEL_LAYERS = {
