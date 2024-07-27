@@ -13,7 +13,8 @@ services:
       dockerfile: Dockerfile
 
     command: >
-      sh -c "python chatapp/manage.py migrate &&
+      sh -c "python chatapp/manage.py wait_for_db &&
+             python chatapp/manage.py migrate &&
              python chatapp/manage.py runserver 0.0.0.0:8000"
 
     volumes:
@@ -56,6 +57,8 @@ services:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5433:5432"
 
 
 volumes:
