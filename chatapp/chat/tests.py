@@ -1,12 +1,14 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import Room, Message
 
 
+User = get_user_model()
 class MessageModelTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(email="test@example.com", password="12345")
         self.room = Room.objects.create(name="Test Room", description="This is a test Room")
 
     def test_create_message(self):
