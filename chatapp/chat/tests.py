@@ -18,7 +18,8 @@ class MessageModelTest(TestCase):
         self.assertEqual(message.room, self.room)
         self.assertEqual(message.user, self.user)
         self.assertEqual(message.content, "This is a Test Message")
-    
+
+
 """
     def test_message_str(self):
         message = Message.objects.create(
