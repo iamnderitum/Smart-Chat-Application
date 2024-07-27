@@ -2,10 +2,15 @@
 Views for the user API.
 """
 from rest_framework import generics
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 
-from authentication.serializers import UserSerializer
+from authentication.serializers import (
+    UserSerializer,
+    AuthTokenSerializer,
+)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -13,3 +18,9 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = [AllowAny]
+
+
+class CreateTokenView(ObtainAuthToken):
+    """Create a new auth token for user"""
+    serializer_class = AuthTokenSerializer
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
