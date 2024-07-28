@@ -1,6 +1,19 @@
-version: '3.8'
+# Smart Chat App Compose File
 
 services:
+  db:
+    container_name: chatapp_db
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - devdb-db-data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB: devdb
+      - POSTGRES_USER: devuser
+      - POSTGRES_PASSWORD: changeme
+    ports:
+      - "5432:5432"
+
   redis:
     image: redis:alpine
     ports:
@@ -15,6 +28,7 @@ services:
     command: >
       sh -c "python chatapp/manage.py wait_for_db &&
              python chatapp/manage.py migrate &&
+             python chatapp/manage.py collectstatic --noinput &&
              python chatapp/manage.py runserver 0.0.0.0:8000"
 
     volumes:
@@ -25,11 +39,9 @@ services:
       - redis
       - db
     environment:
-      - REDIS_URL=redis://redis:6379
-      - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
+      - POSTGRES_DB: devdb
+      - POSTGRES_USER: devuser
+      - POSTGRES_PASSWORD: changeme
 
   channels:
     build:
@@ -47,17 +59,6 @@ services:
 
     environment:
       - REDIS_URL=redis://redis:6379
-
-  db:
-    image: postgres:16-alpine
-    volumes:
-      - dev-db-data:/var/lib/postgres/data
-    environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
-    ports:
-      - "5433:5432"
 
 
 volumes:

@@ -4,6 +4,7 @@ channels
 channels_redis
 django-redis
 psycopg2
+psycopg2-binary
 flake8
 pytest
 django-pytest
