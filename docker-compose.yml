@@ -6,11 +6,11 @@ services:
     image: postgres:16-alpine
     restart: always
     volumes:
-      - devdb-db-data:/var/lib/postgres/data
+      - dev-db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB: devdb
-      - POSTGRES_USER: devuser
-      - POSTGRES_PASSWORD: changeme
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
     ports:
       - "5432:5432"
 
@@ -39,9 +39,9 @@ services:
       - redis
       - db
     environment:
-      - POSTGRES_DB: devdb
-      - POSTGRES_USER: devuser
-      - POSTGRES_PASSWORD: changeme
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
 
   channels:
     build:
