@@ -8,6 +8,7 @@ from rest_framework.authentication import BaseAuthentication
 
 user = get_user_model()
 
+
 def generateAccessToken(user):
     payload = {
         "user_id": user.id,
@@ -27,8 +28,10 @@ class JWTAuthentication(BaseAuthentication):
 
         try:
             payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-        except:
-            raise exceptions.AuthenticationFailed("unouthenticated")
+        except jwt.ExpiredSignatureError:
+            raise exceptions.AuthenticationFailed("Token has expired")
+        except jwt.InvalidKeyError:
+            raise exceptions.AuthenticationFailed("unouthenticated: Invalid token")
 
         user = get_user_model().objects.filter(id=payload["user_id"]).first()
 

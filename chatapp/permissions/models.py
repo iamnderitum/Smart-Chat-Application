@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from base.models import BaseModel
 
 content_types = ContentType.objects.all()
-from base.models import BaseModel
 
 
 class Permission(BaseModel):
@@ -10,5 +10,3 @@ class Permission(BaseModel):
 
     def __str__(self) -> str:
         return self.name
-
-

@@ -45,6 +45,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
         """Retrieve and return the Authenticated user."""
         return self.request.user
 
+
 @api_view(["POST"])
 def login(request):
     email = request.data.get("email")
@@ -65,6 +66,7 @@ def login(request):
     }
     return response
 
+
 @api_view(["POST"])
 def logout(_):
     response = Response()
@@ -74,11 +76,14 @@ def logout(_):
     }
 
     return response
+
+
 class AuthenticatedUser(APIView):
     user = get_user_model()
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         serializer = UserSerializer(request.user)
 
