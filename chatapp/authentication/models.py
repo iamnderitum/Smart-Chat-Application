@@ -8,7 +8,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from base.models import BaseModel
-
+from roles.models import Role
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True)
     # is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()

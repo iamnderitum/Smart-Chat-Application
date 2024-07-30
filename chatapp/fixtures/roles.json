@@ -1,0 +1,41 @@
+[
+    {
+        "model": "roles.role",
+        "pk": 1,
+        "fields": {
+            "name": "Admin",
+            "permissions": [
+                1,
+                2,
+                3,
+                4,
+                5
+
+            ]
+        }
+    },
+    {
+        "model": "roles.role",
+        "pk": 2,
+        "fields": {
+            "name": "Moderator",
+            "permissions": [
+                1,
+                4
+
+
+            ]
+        }
+    },
+    {
+        "model": "roles.role",
+        "pk": 3,
+        "fields": {
+            "name": "Student",
+            "permissions": [
+                4,
+                5
+            ]
+        }
+    }
+]
