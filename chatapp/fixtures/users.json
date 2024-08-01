@@ -1,0 +1,47 @@
+[
+    {
+        "model": "authentication.user",
+        "pk": 1,
+        "fields": {
+            "name": "Moses Ndung'u Wambui",
+            "email": "moseswambui044@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "is_superuser": true,
+            "password": "@BlackUser321",
+            "role": 1,
+            "user_permissions": [],
+            "groups": []
+        }
+    },
+    {
+        "model": "authentication.user",
+        "pk": 2,
+        "fields": {
+            "name": "David Mwangu Wambui",
+            "email": "daviemwas@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "is_superuser": false,
+            "password": "@BlackUser321",
+            "role": 2,
+            "user_permissions": [],
+            "groups": []
+        }
+    },
+    {
+        "model": "authentication.user",
+        "pk": 3,
+        "fields": {
+            "name": "Daniel Njama Wangari",
+            "email": "dannjazz@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "is_superuser": false,
+            "password": "@BlackUser321",
+            "role": 3,
+            "user_permissions": [],
+            "groups": []
+        }
+    }
+]

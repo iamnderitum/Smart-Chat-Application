@@ -6,7 +6,8 @@ from authentication import views
 from authentication.views import (
     login,
     logout,
-    AuthenticatedUser
+    AuthenticatedUser,
+    PermissionAPIView
 )
 app_name = "authentication"
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path("me/", views.ManageUserView.as_view(), name="me"),
 
     path("login/", login, name="login"),
-    path("auth-user", AuthenticatedUser.as_view(), name="auth-user"),
+    path("user", AuthenticatedUser.as_view(), name="user"),
     path("logout/", logout, name="logout"),
+    path("permissions/", PermissionAPIView.as_view(), name="permissions")
 ]

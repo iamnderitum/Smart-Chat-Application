@@ -14,12 +14,14 @@ from django.contrib.auth import get_user_model
 from authentication.serializers import (
     UserSerializer,
     AuthTokenSerializer,
+    PermissionSerializer,
 )
 from authentication.models import User
 from authentication.user_authenticate import (
     generateAccessToken,
     JWTAuthentication,
 )
+from permissions.models import Permission
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -86,6 +88,18 @@ class AuthenticatedUser(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
+
+        return Response({
+            "data": serializer.data
+        })
+
+
+class PermissionAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = PermissionSerializer(Permission.objects.all())
 
         return Response({
             "data": serializer.data

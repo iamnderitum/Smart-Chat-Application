@@ -7,6 +7,7 @@ from django.contrib.auth import (
 )
 from django.utils.translation import gettext as _
 from rest_framework import serializers
+from permissions.models import Permission
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -56,3 +57,10 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs["user"] = user
 
         return attrs
+
+
+class PermissionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Permission
+        fields = "__all__"
