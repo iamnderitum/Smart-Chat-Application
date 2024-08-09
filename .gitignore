@@ -7,6 +7,7 @@ __pycache__
 # C extensions
 *.so
 
+chatapp/chat/__pycache__/*.pyc
 # Distribution / packaging
 .Python
 env/

@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import chat_view, \
+                   home, \
                    MessageViewSet, \
                    MessageListView, \
                    MsgCreateView, \
@@ -13,6 +14,7 @@ router.register(r"messages", MessageViewSet)
 
 urlpatterns = [
     path("chat/", chat_view, name="chat"),
+    path("home/", home, name="home"),
 
     path("messages/", MessageListView.as_view(), name="message-list"),
 

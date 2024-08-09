@@ -21,6 +21,9 @@ from .serializers import RoomSerializer, MessageSerializer
 def chat_view(request):
     return render(request, "chat.html")
 
+def home(request):
+    return render(request, "chat/index.html")
+
 
 class MessageListView(View):
     def get(self, request, *args, **kwargs):
