@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.db.models.signals import post_save
 from base.models import BaseModel
 from roles.models import Role
 
@@ -51,3 +52,25 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         related_name="custom_user_set",
         blank=True
     )
+
+
+class Profile(BaseModel):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="profile_user",
+
+    )
+    bio = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="user_images", default="default.jpg")
+    verified = models.BooleanField(default=False)
+
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+
+    post_save.connect(create_user_profile, sender=User)
+    post_save.connect(save_user_profile, sender=User)

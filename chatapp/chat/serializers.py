@@ -1,14 +1,27 @@
 from rest_framework import serializers
-
+# from django.contrib.auth import get_user_model
 from .models import Room, Message
+
+from authentication.serializers import ProfileSerializer
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source="user.username")
+    receiver_profile = ProfileSerializer(read_only=True)
+    sender_profile = ProfileSerializer(read_only=True)
 
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = [
+            "id",
+            "user",
+            "sender",
+            "sender_profile",
+            "receiver",
+            "receiver_profile",
+            "message",
+            "is_read",
+            "timestamp",
+        ]
 
 
 class RoomSerializer(serializers.ModelSerializer):

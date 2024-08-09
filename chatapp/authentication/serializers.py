@@ -5,16 +5,22 @@ from django.contrib.auth import (
     get_user_model,
     authenticate,
 )
+
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 from permissions.models import Permission
+
+from authentication.models import (
+    User,
+    Profile,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the user object."""
 
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ["id", "email", "password", "name"]
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
@@ -32,6 +38,12 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
 
 
 class AuthTokenSerializer(serializers.Serializer):

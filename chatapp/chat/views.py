@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
+from django.db.models import Subquery, OuterRef, Q
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -10,9 +11,14 @@ from django.contrib.auth.decorators import login_required
 
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 
 from .models import Room, Message
-from .serializers import RoomSerializer, MessageSerializer
+from .serializers import (
+    RoomSerializer,
+    MessageSerializer
+)
+from authentication.models import User
 # from .sentiment_analysis import analyze_sentiment
 # from . recommendation_service import recommend_courses
 
@@ -21,9 +27,34 @@ from .serializers import RoomSerializer, MessageSerializer
 def chat_view(request):
     return render(request, "chat.html")
 
+
 def home(request):
     return render(request, "chat/index.html")
 
+
+class MyInbox(generics.ListAPIView):
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+
+        messages = Message.objects.filter(
+            id__in=Subquery(
+                User.objects.filter(
+                    Q(sender__receiver=user_id),
+                    Q(receiver__receiver=user_id)
+                ).distinct().annotate(
+                    last_msg=Subquery(
+                        Message.objects.filter(
+                            Q(sender=OuterRef("id"), receiver=user_id),
+                            Q(receiver=OuterRef("id"), sender=user_id)
+                        ).order_by("-id")[:1].values_list("id", flat=True)
+                    )
+                ).values_list("last_msg", flat=True).order_by("id")
+            )
+        ).order_by("-id")
+
+        return messages
 
 class MessageListView(View):
     def get(self, request, *args, **kwargs):

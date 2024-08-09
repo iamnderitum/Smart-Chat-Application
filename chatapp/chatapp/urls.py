@@ -34,6 +34,6 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
-    ## Adding base url for loging
-    path("accounts/login/",auth_views.LoginView.as_view(), name="login"),
+    # Adding base url for loging
+    path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
 ]

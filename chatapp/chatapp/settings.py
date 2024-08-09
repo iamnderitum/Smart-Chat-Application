@@ -111,9 +111,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": "localhost", # os.environ.get("DB_HOST"),
         "PORT": "5432", # os.environ.get("DB_PORT"),
-        "NAME": "devdb", # os.environ.get("DB_NAME"),
-        "USER": "devuser", # os.environ.get("DB_USER"),
-        "PASSWORD": "changeme", # os.environ.get("DB_PASS")
+        "NAME": "chatappdb", # os.environ.get("DB_NAME"),
+        "USER": "chatuser", # os.environ.get("DB_USER"),
+        "PASSWORD": "011235813", # os.environ.get("DB_PASS")
     }
 }
 

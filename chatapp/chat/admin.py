@@ -15,4 +15,4 @@ class MessageAdmin(admin.ModelAdmin):
     class Meta:
         model = Message
 
-    list_display = ("room", "user", "content")
+    list_display = ("sender", "receiver", "message", "timestamp")
