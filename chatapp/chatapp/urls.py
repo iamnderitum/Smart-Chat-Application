@@ -19,11 +19,12 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('chat.urls')),
+    path('api/', include('chat.urls'), name="api"),
     path("api/user/", include("authentication.urls")),
     path("api/userprofile/", include("userprofile.urls")),
 
@@ -33,4 +34,6 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+    ## Adding base url for loging
+    path("accounts/login/",auth_views.LoginView.as_view(), name="login"),
 ]
