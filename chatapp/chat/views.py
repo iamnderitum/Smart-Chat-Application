@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
+# from rest_framework import generics
 
 from .models import Room, Message
 from .serializers import (
@@ -55,6 +55,7 @@ class MyInbox(generics.ListAPIView):
         ).order_by("-id")
 
         return messages
+
 
 class MessageListView(View):
     def get(self, request, *args, **kwargs):
