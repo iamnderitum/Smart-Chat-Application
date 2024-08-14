@@ -20,13 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-key = 'django-insecure-k8=5i_!44tgz9h35q_i$9bpyf*pnpl$7p*(5e5mao*zy+wb*%c'
-SECRET_KEY = key
-
+# key = 'django-insecure-k8=5i_!44tgz9h35q_i$9bpyf*pnpl$7p*(5e5mao*zy+wb*%c'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -108,11 +107,11 @@ WSGI_APPLICATION = 'chatapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.getenv("DB_HOST"), # os.environ.get("DB_HOST"),
-        "PORT": "5433", # os.environ.get("DB_PORT"),
-        "NAME": os.getenv("DB_NAME"), # os.environ.get("DB_NAME"),
-        "USER": os.getenv("DB_USER"), # os.environ.get("DB_USER"),
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "HOST": os.getenv("DB_HOST", "localhost"), # os.environ.get("DB_HOST"),
+        "PORT": os.getenv("DB_PORT",  "5432"),
+        "NAME": os.getenv("DB_NAME", BASE_DIR / "db.sqlite3"), # os.environ.get("DB_NAME"),
+        "USER": os.getenv("DB_USER", "user"), # os.environ.get("DB_USER"),
         "PASSWORD": os.getenv("DB_PASS"), # os.environ.get("DB_PASS")
     }
 }
@@ -165,6 +164,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
